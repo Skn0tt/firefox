@@ -242,6 +242,9 @@ interface BrowsingContext {
   // Reduced-Motion simulation, for DevTools.
   [SetterThrows] attribute PrefersReducedMotionOverride prefersReducedMotionOverride;
 
+  // Contrast simulation, for DevTools.
+  [SetterThrows] attribute PrefersContrastOverride prefersContrastOverride;
+
   /**
    * A unique identifier for the browser element that is hosting this
    * BrowsingContext tree. Every BrowsingContext in the element's tree will

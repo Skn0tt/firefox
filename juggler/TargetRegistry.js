@@ -887,7 +887,7 @@ function fromProtocolReducedMotion(reducedMotion) {
 }
 
 function fromProtocolContrast(contrast) {
-  if (contrast === 'more' || contrast === 'less' || contrast === 'custom')
+  if (contrast === 'more' || contrast === 'less' || contrast === 'custom' || contrast === 'no-preference')
     return contrast;
   if (contrast === null)
     return undefined;

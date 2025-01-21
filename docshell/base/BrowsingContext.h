@@ -248,6 +248,7 @@ struct EmbedderColorSchemes {
   FIELD(DisplayMode, dom::DisplayMode)                                        \
   /* playwright addition */                                                   \
   FIELD(PrefersReducedMotionOverride, dom::PrefersReducedMotionOverride)      \
+  FIELD(PrefersContrastOverride, dom::PrefersContrastOverride)                \
   /* The number of entries added to the session history because of this       \
    * browsing context. */                                                     \
   FIELD(HistoryEntryCount, uint32_t)                                          \
@@ -953,6 +954,10 @@ class BrowsingContext : public nsILoadContext, public nsWrapperCache {
     return GetPrefersReducedMotionOverride();
   }
 
+  dom::PrefersContrastOverride PrefersContrastOverride() const {
+    return GetPrefersContrastOverride();
+  }
+
   bool IsInBFCache() const;
 
   bool AllowJavascript() const { return GetAllowJavascript(); }
@@ -1112,6 +1117,11 @@ class BrowsingContext : public nsILoadContext, public nsWrapperCache {
     return IsTop();
   }
 
+  bool CanSet(FieldIndex<IDX_PrefersContrastOverride>,
+              dom::PrefersContrastOverride, ContentParent*) {
+    return IsTop();
+  }
+
   bool CanSet(FieldIndex<IDX_ForcedColorsOverride>, dom::ForcedColorsOverride,
               ContentParent*) {
     return IsTop();
@@ -1129,6 +1139,9 @@ class BrowsingContext : public nsILoadContext, public nsWrapperCache {
 
   void DidSet(FieldIndex<IDX_ForcedColorsOverride>,
               dom::ForcedColorsOverride aOldValue);
+
+  void DidSet(FieldIndex<IDX_PrefersContrastOverride>,
+              dom::PrefersContrastOverride aOldValue);
 
   template <typename Callback>
   void WalkPresContexts(Callback&&);
