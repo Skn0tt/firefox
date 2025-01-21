@@ -152,6 +152,7 @@ void PopulateCSSProperties() {
       PreferenceSheet::ContentPrefs().ColorsFor(ColorScheme::Light);
 
   StylePrefersContrast prefersContrast = [&colors] {
+    // maybe here? but we're missing the document. maybe not
     // Replicates Gecko_MediaFeatures_PrefersContrast but without a Document
     if (!PreferenceSheet::ContentPrefs().mUseAccessibilityTheme &&
         PreferenceSheet::ContentPrefs().mUseDocumentColors) {

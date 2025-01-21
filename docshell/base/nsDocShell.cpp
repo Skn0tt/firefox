@@ -364,6 +364,7 @@ nsDocShell::nsDocShell(BrowsingContext* aBrowsingContext,
       mDisallowBFCache(false),
       mReducedMotionOverride(REDUCED_MOTION_OVERRIDE_NONE),
       mForcedColorsOverride(FORCED_COLORS_OVERRIDE_NO_OVERRIDE),
+      mContrastOverride(CONTRAST_OVERRIDE_NONE),
       mAllowAuth(mItemType == typeContent),
       mAllowKeywordFixup(false),
       mDisableMetaRefreshWhenInactive(false),
@@ -3233,6 +3234,24 @@ nsDocShell::GetForcedColorsOverride(ForcedColorsOverride* aForcedColorsOverride)
 NS_IMETHODIMP
 nsDocShell::SetForcedColorsOverride(ForcedColorsOverride aForcedColorsOverride) {
   mForcedColorsOverride = aForcedColorsOverride;
+  RefPtr<nsPresContext> presContext = GetPresContext();
+  if (presContext) {
+    presContext->MediaFeatureValuesChanged(
+        {MediaFeatureChangeReason::SystemMetricsChange},
+        MediaFeatureChangePropagation::JustThisDocument);
+  }
+  return NS_OK;
+}
+
+NS_IMETHODIMP
+nsDocShell::GetContrastOverride(ContrastOverride* aContrastOverride) {
+  *aContrastOverride = GetRootDocShell()->mContrastOverride;
+  return NS_OK;
+}
+
+NS_IMETHODIMP
+nsDocShell::SetContrastOverride(ContrastOverride aContrastOverride) {
+  mContrastOverride = aContrastOverride;
   RefPtr<nsPresContext> presContext = GetPresContext();
   if (presContext) {
     presContext->MediaFeatureValuesChanged(

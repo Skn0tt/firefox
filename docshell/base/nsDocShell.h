@@ -1304,6 +1304,7 @@ class nsDocShell final : public nsDocLoader,
   RefPtr<nsGeolocationService> mGeolocationServiceOverride;
   ReducedMotionOverride mReducedMotionOverride;
   ForcedColorsOverride mForcedColorsOverride;
+  ContrastOverride mContrastOverride;
 
   bool mAllowAuth : 1;
   bool mAllowKeywordFixup : 1;
