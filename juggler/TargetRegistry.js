@@ -395,7 +395,6 @@ class PageTarget {
     this._screencastRecordingInfo = undefined;
     this._dialogs = new Map();
     this.forcedColors = 'none';
-    this.contrast = 'none';
     this.disableCache = false;
     this.mediumOverride = '';
     this.crossProcessCookie = {
