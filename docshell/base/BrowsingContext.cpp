@@ -113,6 +113,10 @@ struct ParamTraits<mozilla::dom::PrefersReducedMotionOverride>
     : public mozilla::dom::WebIDLEnumSerializer<mozilla::dom::PrefersReducedMotionOverride> {};
 
 template <>
+struct ParamTraits<mozilla::dom::PrefersContrastOverride>
+    : public mozilla::dom::WebIDLEnumSerializer<mozilla::dom::PrefersContrastOverride> {};
+
+template <>
 struct ParamTraits<mozilla::dom::ForcedColorsOverride>
     : public mozilla::dom::WebIDLEnumSerializer<
           mozilla::dom::ForcedColorsOverride> {};
@@ -2885,6 +2889,15 @@ void BrowsingContext::DidSet(FieldIndex<IDX_ForcedColorsOverride>,
                              dom::ForcedColorsOverride aOldValue) {
   MOZ_ASSERT(IsTop());
   if (ForcedColorsOverride() == aOldValue) {
+    return;
+  }
+  PresContextAffectingFieldChanged();
+}
+
+void BrowsingContext::DidSet(FieldIndex<IDX_PrefersContrastOverride>,
+                             dom::PrefersContrastOverride aOldValue) {
+  MOZ_ASSERT(IsTop());
+  if (PrefersContrastOverride() == aOldValue) {
     return;
   }
   PresContextAffectingFieldChanged();

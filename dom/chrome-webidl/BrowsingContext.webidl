@@ -71,6 +71,16 @@ enum PrefersReducedMotionOverride {
 };
 
 /**
+ * CSS prefers-contrast values.
+ */
+enum PrefersContrastOverride {
+  "no-preference",
+  "more",
+  "less",
+  "custom",
+};
+
+/**
  * Allowed overrides of platform/pref default behaviour for touch events.
  */
 enum TouchEventsOverride {

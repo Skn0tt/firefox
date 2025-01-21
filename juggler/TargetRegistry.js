@@ -395,6 +395,7 @@ class PageTarget {
     this._screencastRecordingInfo = undefined;
     this._dialogs = new Map();
     this.forcedColors = 'none';
+    this.contrast = 'no-preference';
     this.disableCache = false;
     this.mediumOverride = '';
     this.crossProcessCookie = {
@@ -501,6 +502,7 @@ class PageTarget {
     this.updateEmulatedMedia(browsingContext);
     this.updateColorSchemeOverride(browsingContext);
     this.updateReducedMotionOverride(browsingContext);
+    this.updateContrastOverride(browsingContext);
     this.updateForcedColorsOverride(browsingContext);
     this.updateForceOffline(browsingContext);
     this.updateCacheDisabled(browsingContext);
@@ -638,6 +640,15 @@ class PageTarget {
 
   updateReducedMotionOverride(browsingContext = undefined) {
     (browsingContext || this._linkedBrowser.browsingContext).prefersReducedMotionOverride = this.reducedMotion || this._browserContext.reducedMotion || 'none';
+  }
+
+  setContrast(contrast) {
+    this.contrast = fromProtocolContrast(contrast);
+    this.updateContrastOverride();
+  }
+
+  updateContrastOverride(browsingContext = undefined) {
+    (browsingContext || this._linkedBrowser.browsingContext).prefersContrastOverride = this.contrast || this._browserContext.contrast || 'no-preference';
   }
 
   setForcedColors(forcedColors) {
@@ -875,6 +886,14 @@ function fromProtocolReducedMotion(reducedMotion) {
   throw new Error('Unknown reduced motion: ' + reducedMotion);
 }
 
+function fromProtocolContrast(contrast) {
+  if (contrast === 'more' || contrast === 'less' || contrast === 'custom')
+    return contrast;
+  if (contrast === null)
+    return undefined;
+  throw new Error('Unknown contrast: ' + contrast);
+}
+
 function fromProtocolForcedColors(forcedColors) {
   if (forcedColors === 'active' || forcedColors === 'none')
     return forcedColors;
@@ -915,6 +934,7 @@ class BrowserContext {
     this.colorScheme = 'none';
     this.forcedColors = 'none';
     this.reducedMotion = 'none';
+    this.contrast = 'no-preference';
     this.videoRecordingOptions = undefined;
     this.crossProcessCookie = {
       initScripts: [],
@@ -939,6 +959,12 @@ class BrowserContext {
     this.reducedMotion = fromProtocolReducedMotion(reducedMotion);
     for (const page of this.pages)
       page.updateReducedMotionOverride();
+  }
+
+  setContrast(contrast) {
+    this.contrast = fromProtocolContrast(contrast);
+    for (const page of this.pages)
+      page.updateContrastOverride();
   }
 
   setForcedColors(forcedColors) {
