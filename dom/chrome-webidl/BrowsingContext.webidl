@@ -74,6 +74,7 @@ enum PrefersReducedMotionOverride {
  * CSS prefers-contrast values.
  */
 enum PrefersContrastOverride {
+  "none",
   "no-preference",
   "more",
   "less",

@@ -395,7 +395,7 @@ class PageTarget {
     this._screencastRecordingInfo = undefined;
     this._dialogs = new Map();
     this.forcedColors = 'none';
-    this.contrast = 'no-preference';
+    this.contrast = 'none';
     this.disableCache = false;
     this.mediumOverride = '';
     this.crossProcessCookie = {
@@ -648,7 +648,7 @@ class PageTarget {
   }
 
   updateContrastOverride(browsingContext = undefined) {
-    (browsingContext || this._linkedBrowser.browsingContext).prefersContrastOverride = this.contrast || this._browserContext.contrast || 'no-preference';
+    (browsingContext || this._linkedBrowser.browsingContext).prefersContrastOverride = this.contrast || this._browserContext.contrast || 'none';
   }
 
   setForcedColors(forcedColors) {
@@ -934,7 +934,7 @@ class BrowserContext {
     this.colorScheme = 'none';
     this.forcedColors = 'none';
     this.reducedMotion = 'none';
-    this.contrast = 'no-preference';
+    this.contrast = 'none';
     this.videoRecordingOptions = undefined;
     this.crossProcessCookie = {
       initScripts: [],
