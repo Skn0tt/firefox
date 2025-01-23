@@ -289,7 +289,6 @@ StylePrefersColorScheme Gecko_MediaFeatures_PrefersColorScheme(
 // as a signal.
 StylePrefersContrast Gecko_MediaFeatures_PrefersContrast(
     const Document* aDocument) {
-    // maybe this is it?
   if (auto* bc = aDocument->GetBrowsingContext()) {
     switch (bc->Top()->PrefersContrastOverride()) {
       case dom::PrefersContrastOverride::No_preference:
